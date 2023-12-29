@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include <array>
+#include <vector>
 #include <string>
 
 class Hardware {
@@ -10,7 +11,7 @@ public:
 	~Hardware() {
 		
 	}
-	void GetSystemData(std::string& driveletter, DWORD& serial, DWORD& filesystemflags, std::string& cpuSerial, std::string& motherboardserial, std::string& windowsSerial) {
+	void GetSystemData(std::string& driveletter, DWORD& serial, DWORD& filesystemflags, std::string& cpuSerial, std::string& motherboardserial) {
 		GetDriveData(driveletter);
 		GetHardwaredata();
 		cpuSerial = cserial;
@@ -18,15 +19,28 @@ public:
 		serial = usbserial;
 		filesystemflags = fsflags;
 	}
+	std::vector<std::string> GetDrivesList() {
+		dletter = "";
+		DWORD drives = GetLogicalDrives();
+		std::vector<std::string> result;
+		for (char i = 'A'; i <= 'Z'; ++i) {
+			if ((drives & 1) != 0) {
+				dletter = " :\\";
+				dletter[0] = i;
+				result.push_back(dletter);
+			}
+			drives >>= 1;
+		}
+		return result;
+	}
 private:
 	DWORD usbserial = 0;
 	DWORD fsflags = 0;
-	std::string cserial = "";
-	std::string mbserial = "";
-	std::string winserial = "";
-	std::string dletter = "";
+	std::string cserial;
+	std::string mbserial;
+	std::string dletter;
 	char moboSerialBuf[1024]{};
-	std::string moboSerialCommand = "";
+	std::string moboSerialCommand;
 	int i = 0;
 
 	void GetDriveData(std::string letter) {
@@ -69,8 +83,5 @@ private:
 			}
 			_pclose(moboSerialStream);
 		}
-	}
-	void GetWindowsData() {
-		
 	}
 };
