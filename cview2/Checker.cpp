@@ -1,5 +1,5 @@
 class Checker {
 private:
 public:
-	void Check()
+	void Check(){}
 };

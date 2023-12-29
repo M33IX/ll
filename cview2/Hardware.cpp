@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-class Hardware {
+class Hardware{
 public:
 	Hardware() {
 		
@@ -20,7 +20,6 @@ public:
 		filesystemflags = fsflags;
 	}
 	static std::vector<std::string> GetDrivesList() {
-		//dletter = "";
 		DWORD drives = GetLogicalDrives();
 		std::vector<std::string> result;
 		for (char i = 'A'; i <= 'Z'; ++i) {
@@ -43,7 +42,7 @@ private:
 
 	void GetDriveData(std::string letter) {
 		dletter = "";
-		dletter = letter + ":\\";
+		dletter = letter;
 			if (!GetVolumeInformationA(dletter.c_str(), nullptr, 0, &usbserial, nullptr, &fsflags, nullptr, 0)) {
 				throw "Can't get drive info";
 			}

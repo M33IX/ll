@@ -57,13 +57,13 @@ public:
       }
 
       void SetKey(std::string& key) {
-          if (strnlen_s(key.c_str(), 64) != AES::DEFAULT_KEYLENGTH) throw "Wrong key size";
+          if (strnlen_s(key.c_str(), 64) != AES::DEFAULT_KEYLENGTH) throw std::string("Wrong key size");
           for (int i = 0; i < LENGTH; i++) {
               this->key[i] = key[i];
           }
       }
       void SetIV(std::string& iv) {
-          if (strnlen_s(iv.c_str(), 64) != AES::BLOCKSIZE) throw "Wrong key size";
+          if (strnlen_s(iv.c_str(), 64) != AES::BLOCKSIZE) throw std::string("Wrong key size");
           for (int i = 0; i < LENGTH; i++) {
               this->iv[i] = iv[i];
           }
