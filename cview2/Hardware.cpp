@@ -19,15 +19,13 @@ public:
 		serial = usbserial;
 		filesystemflags = fsflags;
 	}
-	std::vector<std::string> GetDrivesList() {
-		dletter = "";
+	static std::vector<std::string> GetDrivesList() {
+		//dletter = "";
 		DWORD drives = GetLogicalDrives();
 		std::vector<std::string> result;
 		for (char i = 'A'; i <= 'Z'; ++i) {
 			if ((drives & 1) != 0) {
-				dletter = " :\\";
-				dletter[0] = i;
-				result.push_back(dletter);
+				result.push_back(std::string{i} + ":\\");
 			}
 			drives >>= 1;
 		}
